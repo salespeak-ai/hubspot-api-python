@@ -1,5 +1,4 @@
-import pkg_resources
-
+import os
 
 class DiscoveryBase:
     def __init__(self, config):
@@ -24,7 +23,7 @@ class DiscoveryBase:
 
         api_client = api_client_package.ApiClient(configuration=configuration)
 
-        package_version = pkg_resources.require("hubspot-api-client")[0].version
+        package_version = os.getenv("HUBSPOT_API_CLIENT_VERSION","8.1.1")
         api_client.user_agent = "hubspot-api-client-python; {0}".format(package_version)
 
         return getattr(api_client_package, api_name)(api_client=api_client)
